@@ -12,7 +12,21 @@
   --line:#E6DED5; --brand:#8D634B; --brand-dark:#6E4B37; --brand-soft:#EFE4DB;
   --ok:#2F7D5B; --ok-soft:#E3F1EA; --warn:#B26B0A; --warn-soft:#FBEFD9;
   --danger:#B4443A; --danger-soft:#F8E3E0; --radius:14px;
+  --brand-ink:#6E4B37; --banner:#6E4B37; --flash:#FFF3C9; --toast:#262320;
+  --danger-line:#E9B8B2; --warn-line:#EFCF96; --off:#bbb;
   --shadow:0 1px 2px rgba(60,40,20,.06),0 4px 16px rgba(60,40,20,.05);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#1A1613; --surface:#241F1B; --surface2:#2B2520; --ink:#EFE8E1; --muted:#A99D93; --line:#3A322B;
+  --brand:#B07E5F; --brand-dark:#96694D; --brand-soft:#3A2B21; --brand-ink:#E6C3A8; --ok:#5CBF8E; --ok-soft:#1D3529;
+  --warn:#E3A64A; --warn-soft:#3B2D15; --danger:#E5857A; --danger-soft:#3E211D; --flash:#4A3D18; --danger-line:#6B3029; --warn-line:#6B5022; --off:#5a524b;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#1A1613; --surface:#241F1B; --surface2:#2B2520; --ink:#EFE8E1; --muted:#A99D93; --line:#3A322B;
+  --brand:#B07E5F; --brand-dark:#96694D; --brand-soft:#3A2B21; --brand-ink:#E6C3A8; --ok:#5CBF8E; --ok-soft:#1D3529;
+  --warn:#E3A64A; --warn-soft:#3B2D15; --danger:#E5857A; --danger-soft:#3E211D; --flash:#4A3D18; --danger-line:#6B3029; --warn-line:#6B5022; --off:#5a524b;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
@@ -22,12 +36,12 @@ button{cursor:pointer}
 .num{font-variant-numeric:tabular-nums}
 
 /* Demo banner */
-.demo{background:var(--brand-dark);color:#F6EEE7;font-size:13px;padding:8px 16px;text-align:center}
+.demo{background:var(--banner);color:#F6EEE7;font-size:13px;padding:8px 16px;text-align:center}
 .demo b{font-weight:600}
 .demo button{background:none;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:1px 10px;margin-left:8px;font-size:12px;color:#fff}
 
 /* Header */
-header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top, 0px);z-index:20}
 .hwrap{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .brand img{width:44px;height:44px;border-radius:50%;border:1px solid var(--line)}
@@ -49,7 +63,7 @@ header{background:var(--surface);border-bottom:1px solid var(--line);position:st
 .acc{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;font-size:13.5px;text-align:left}
 .acc:hover{border-color:var(--brand)}
 .acc small{display:block;color:var(--muted);font-size:11.5px}
-.memberlink{display:block;width:100%;margin-top:14px;text-align:center;border:1px dashed var(--brand);background:none;border-radius:12px;padding:12px;color:var(--brand-dark);font-size:14px}
+.memberlink{display:block;width:100%;margin-top:14px;text-align:center;border:1px dashed var(--brand);background:none;border-radius:12px;padding:12px;color:var(--brand-ink);font-size:14px}
 .nojs{max-width:520px;margin:40px auto;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;font-size:15px}
 .sub{max-width:1180px;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto}
 .sub button{border:0;background:none;padding:10px 14px;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
@@ -69,7 +83,7 @@ h2{font-weight:500;font-size:16px;margin-bottom:12px;display:flex;align-items:ce
 .btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
 .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .btn:disabled{opacity:.5;cursor:default}
-.ro{font-size:12px;background:var(--brand-soft);color:var(--brand-dark);padding:3px 10px;border-radius:20px}
+.ro{font-size:12px;background:var(--brand-soft);color:var(--brand-ink);padding:3px 10px;border-radius:20px}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
@@ -77,9 +91,9 @@ h2{font-weight:500;font-size:16px;margin-bottom:12px;display:flex;align-items:ce
 .kpi .l{font-size:12.5px;color:var(--muted)}
 .kpi .v{font-size:24px;font-weight:500;margin-top:2px}
 .kpi .s{font-size:12px;color:var(--muted);margin-top:2px}
-.kpi.alert{border-color:#E9B8B2;background:var(--danger-soft);cursor:pointer}
+.kpi.alert{border-color:var(--danger-line);background:var(--danger-soft);cursor:pointer}
 .kpi.alert .v{color:var(--danger)}
-.kpi.warn{border-color:#EFCF96;background:var(--warn-soft)}
+.kpi.warn{border-color:var(--warn-line);background:var(--warn-soft)}
 .kpi.warn .v{color:var(--warn)}
 .grid2{display:grid;grid-template-columns:1.45fr 1fr;gap:16px;align-items:start}
 .stack{display:grid;gap:16px}
@@ -125,7 +139,7 @@ tr.total td{font-weight:500;border-top:2px solid var(--line)}
 .feed .row .d{flex:1;min-width:0}
 .feed .row .d small{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .new{animation:flash 2.4s ease}
-@keyframes flash{0%,40%{background:#FFF3C9}100%{background:transparent}}
+@keyframes flash{0%,40%{background:var(--flash)}100%{background:transparent}}
 .newtag{font-size:10.5px;background:#F2C94C;color:#4A3500;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle}
 
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
@@ -138,7 +152,7 @@ select:focus,input:focus{outline:2px solid var(--brand-soft);border-color:var(--
 .nid .meta{font-size:12.5px;color:var(--muted)}
 .nid .val{font-size:18px;font-weight:500;text-align:right}
 .nid .ctrl{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.sug{font-size:12.5px;background:var(--brand-soft);color:var(--brand-dark);padding:4px 10px;border-radius:8px;cursor:pointer;border:0}
+.sug{font-size:12.5px;background:var(--brand-soft);color:var(--brand-ink);padding:4px 10px;border-radius:8px;cursor:pointer;border:0}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
 .empty b{display:block;color:var(--ok);font-size:17px;font-weight:500;margin-bottom:4px}
 
@@ -146,7 +160,7 @@ select:focus,input:focus{outline:2px solid var(--brand-soft);border-color:var(--
 .cal{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line);gap:1px}
 .cal .dh{background:var(--surface2);font-size:11.5px;color:var(--muted);text-align:center;padding:6px 0;letter-spacing:.06em}
 .cal .dc{background:var(--surface);min-height:92px;padding:5px;font-size:12px;overflow:hidden}
-.cal .dc.off{background:var(--surface2);color:#bbb}
+.cal .dc.off{background:var(--surface2);color:var(--off)}
 .cal .dc.today .n{background:var(--brand);color:#fff;border-radius:50%}
 .cal .n{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-bottom:2px}
 .cal .e{display:block;border-radius:5px;padding:1px 5px;margin-top:2px;color:#fff;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -162,18 +176,18 @@ select:focus,input:focus{outline:2px solid var(--brand-soft);border-color:var(--
 /* Leader */
 .evcard{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--surface2)}
 .evgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.ask{border:1px solid #EFCF96;background:var(--warn-soft);border-radius:12px;padding:14px;margin-bottom:12px}
+.ask{border:1px solid var(--warn-line);background:var(--warn-soft);border-radius:12px;padding:14px;margin-bottom:12px}
 
 /* Member */
 .phone{max-width:460px;margin:0 auto}
-.hint{background:var(--surface);border:1px dashed var(--brand);color:var(--brand-dark);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;text-align:center}
+.hint{background:var(--surface);border:1px dashed var(--brand);color:var(--brand-ink);border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;text-align:center}
 .hero{text-align:center;padding:10px 0 18px}
 .hero img{width:130px;height:130px;border-radius:50%;box-shadow:var(--shadow)}
 .hero h1{font-size:21px;margin-top:10px}
 .hero p{color:var(--muted);font-size:14px}
 .opt{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow);width:100%;text-align:left}
 .opt:hover{border-color:var(--brand)}
-.opt .ic{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex:none;color:var(--brand-dark)}
+.opt .ic{width:42px;height:42px;border-radius:12px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;flex:none;color:var(--brand-ink)}
 .opt .tx{flex:1}
 .opt .tx b{font-weight:500;display:block}
 .opt .tx small{color:var(--muted)}
@@ -193,7 +207,7 @@ select:focus,input:focus{outline:2px solid var(--brand-soft);border-color:var(--
 .f label input,.f label select{width:100%;color:var(--ink)}
 .f .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .warnbox{background:var(--danger-soft);color:var(--danger);border-radius:10px;padding:10px 12px;font-size:13.5px}
-.infobox{background:var(--brand-soft);color:var(--brand-dark);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.infobox{background:var(--brand-soft);color:var(--brand-ink);border-radius:10px;padding:10px 12px;font-size:13.5px}
 .qr{display:flex;flex-direction:column;align-items:center;gap:10px;margin:8px 0}
 .qr svg{width:190px;height:190px;border:8px solid #fff;box-shadow:0 0 0 1px var(--line);border-radius:6px}
 .copy{display:flex;gap:6px;width:100%}
@@ -202,7 +216,7 @@ select:focus,input:focus{outline:2px solid var(--brand-soft);border-color:var(--
 .success .ck{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:10px}
 .mfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
 
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(120px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;transition:transform .3s,opacity .3s;opacity:0;visibility:hidden;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom, 0px));left:50%;transform:translateX(-50%) translateY(120px);background:var(--toast);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;z-index:60;transition:transform .3s,opacity .3s;opacity:0;visibility:hidden;max-width:calc(100% - 32px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
 
 .rep h4{font-weight:500;margin:16px 0 6px}
@@ -536,7 +550,7 @@ const ICON = {
 };
 function vMembro(){
   const open = S.events.filter(e=>e.date>=TODAY&&e.price>0).sort((a,b)=>a.date-b.date);
-  return `<div class="phone"><div class="hint">👆 É isso que o membro vê ao abrir o link no celular. Não precisa de login nem de app.</div>
+  return `<div class="phone"><div class="hint">É isso que o membro vê ao abrir o link no celular, sem login e sem app. <b style="font-weight:500">Demonstração: nenhum valor é cobrado e o QR Code não é um Pix real.</b></div>
     <div class="hero"><img src="${LOGO}" alt=""><h1>Contribua com a nossa igreja</h1><p>Igreja do Nazareno Vila Anchieta</p></div>
     <div class="sec">Contribuições</div>
     <button class="opt" data-act="pay" data-kind="Dízimo"><span class="ic">${ICON.heart}</span><span class="tx"><b>Dízimo</b><small>Pix ou cartão · comprovante na hora</small></span><span>›</span></button>
@@ -656,7 +670,7 @@ const A = {
     </ol><div class="mfoot"><button class="btn pri" data-act="close">Começar</button></div>`); },
   reset(){ seed(); closeModal(); render(); toast('Demonstração reiniciada'); },
   close(){ closeModal(); },
-  print(){ window.print(); },
+  pdf(){ toast('📄 Na versão real, o relatório é baixado em PDF para a prestação de contas'); },
 };
 function classify(t, min, ev){
   t.status='ok'; t.min=min; t.ev=ev; t.desc = ev ? 'Inscrição · '+evById(ev).name : (min==='geral'?'Dízimo/Oferta (identificado)':'Entrada '+minById(min).short);
@@ -671,7 +685,7 @@ function reportModal(){
     <tr class="total"><td>Total</td><td class="r num">${fmt(T.inn)}</td><td class="r num">${fmt(T.out)}</td><td class="r num">${fmt(T.bal)}</td></tr></tbody></table></div>
     <h4>Eventos</h4><table><tbody>${S.events.map(e=>{const p=evPaid(e);return `<tr><td>${esc(e.name)}</td><td style="color:var(--muted);font-size:13px">${p.length} inscritos</td><td class="r num">${fmt(sum(p))}</td></tr>`}).join('')}</tbody></table>
     <h4>Pendências</h4><p style="font-size:14px">${nid.length?`${nid.length} recebimentos sem origem (${fmt(sum(nid))})`:'Nenhum recebimento sem origem ✓'} · ${toCheck().length} valores em espécie a conferir · ${noReceipt().length} despesas sem comprovante</p></div>
-    <div class="mfoot"><button class="btn" data-act="csv">Exportar Excel</button><button class="btn pri" data-act="print">Imprimir / PDF</button></div>`, true);
+    <div class="mfoot"><button class="btn" data-act="csv">Exportar Excel</button><button class="btn pri" data-act="pdf">Baixar PDF</button></div>`, true);
 }
 
 /* ---------- events ---------- */
