@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Gestão Vila Anchieta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F0EB; --paper:#FFFFFF; --ink:#262320; --muted:#7A716A; --line:#E3D9CF;
+  --brand:#8D634B; --brand-deep:#5E4131; --brand-soft:#EFE4DB; --night:#241C17;
+  --ok:#2F7D5B; --ok-soft:#E3F1EA; --danger:#B4443A; --danger-soft:#F8E3E0; --warn:#B26B0A; --warn-soft:#FBEFD9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#1a1411;font-family:'Jost',system-ui,sans-serif;color:var(--ink);overflow:hidden}
+.num{font-variant-numeric:tabular-nums}
+
+#deck{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+.slide{position:absolute;width:1280px;height:720px;background:var(--bg);padding:64px 80px;display:none;flex-direction:column;overflow:hidden;transform-origin:center center}
+.slide.on{display:flex}
+.slide.dark{background:var(--night);color:#F3EAE2}
+
+.eyebrow{font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:var(--brand);font-weight:500;margin-bottom:14px}
+.dark .eyebrow{color:#D2A583}
+h1{font-weight:400;font-size:64px;line-height:1.05;letter-spacing:-.01em;text-wrap:balance}
+h2{font-weight:400;font-size:44px;line-height:1.1;letter-spacing:-.005em;text-wrap:balance;max-width:1000px}
+.lead{font-size:22px;color:var(--muted);margin-top:14px;max-width:880px;line-height:1.45;font-weight:300}
+.dark .lead{color:#C9BAAD}
+.foot{position:absolute;left:80px;right:80px;bottom:30px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted);letter-spacing:.08em}
+.dark .foot{color:#8f7f72}
+.foot span:last-child{visibility:hidden}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+
+/* cover */
+.cover{display:grid;grid-template-columns:1fr 360px;gap:60px;align-items:center;height:100%}
+.cover img{width:340px;height:340px;border-radius:50%;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.cover h1{font-size:72px}
+.cover .by{margin-top:36px;font-size:16px;color:#B8A596;letter-spacing:.06em}
+.rule{width:64px;height:2px;background:#D2A583;margin:28px 0}
+
+/* problem */
+.probs{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
+.prob{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px 26px;display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
+.prob .ic{width:52px;height:52px;border-radius:14px;background:var(--danger-soft);color:var(--danger);display:flex;align-items:center;justify-content:center}
+.prob b{font-weight:500;font-size:21px;display:block;margin-bottom:4px}
+.prob span{font-size:16.5px;color:var(--muted);line-height:1.4}
+.quote{margin-top:26px;font-size:19px;color:var(--brand-deep);border-left:3px solid var(--brand);padding-left:16px;font-style:italic}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.pill{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px 28px}
+.pill .n{font-size:13px;letter-spacing:.2em;color:var(--brand);font-weight:500}
+.pill h3{font-weight:500;font-size:26px;margin:10px 0 10px}
+.pill p{font-size:17px;color:var(--muted);line-height:1.45}
+.pill .ic{width:56px;height:56px;border-radius:50%;background:var(--brand-soft);color:var(--brand-deep);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+
+/* flow */
+.flow{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr;align-items:stretch;margin-top:40px}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.step .ic{width:54px;height:54px;border-radius:50%;background:var(--brand-soft);color:var(--brand-deep);display:flex;align-items:center;justify-content:center}
+.step b{font-weight:500;font-size:19px}
+.step span{font-size:15px;color:var(--muted);line-height:1.35}
+.step.hl{background:var(--brand);border-color:var(--brand);color:#fff}
+.step.hl span{color:#F1E3D8}
+.step.hl .ic{background:rgba(255,255,255,.18);color:#fff}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--brand)}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+.way{border-top:2px solid var(--brand);padding-top:12px}
+.way b{font-weight:500;font-size:18px;display:block}
+.way span{font-size:15.5px;color:var(--muted);line-height:1.4}
+.way .pct{float:right;font-size:13px;background:var(--ok-soft);color:var(--ok);padding:2px 10px;border-radius:20px}
+
+/* roles */
+table{width:100%;border-collapse:collapse;margin-top:30px;background:var(--paper);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+th{text-align:left;font-weight:500;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:14px 22px;background:#FAF7F3;border-bottom:1px solid var(--line)}
+td{padding:14px 22px;font-size:18px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:500;white-space:nowrap}
+.tag{display:inline-block;font-size:13px;padding:3px 10px;border-radius:20px;margin-left:6px;font-weight:400}
+.t-ro{background:var(--brand-soft);color:var(--brand-deep)}
+.t-no{background:#F1ECE6;color:var(--muted)}
+
+/* screenshots */
+.shot{border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(60,40,20,.18),0 0 0 1px var(--line);background:#fff}
+.shot img{display:block;width:100%}
+.split{display:grid;grid-template-columns:400px 1fr;gap:48px;align-items:center;height:100%}
+.split.rev{grid-template-columns:1fr 400px}
+.pts{list-style:none;display:grid;gap:16px;margin-top:26px}
+.pts li{font-size:18px;line-height:1.4;padding-left:30px;position:relative;color:#3b3531}
+.pts li::before{content:"";position:absolute;left:0;top:8px;width:14px;height:14px;border-radius:50%;background:var(--brand-soft);border:3px solid var(--brand)}
+.pts li b{font-weight:500;color:var(--ink)}
+.phones{display:flex;gap:26px;justify-content:center;align-items:flex-start}
+.phone{width:250px;border-radius:30px;overflow:hidden;border:8px solid #1d1714;box-shadow:0 24px 60px rgba(40,25,15,.28);background:#fff}
+.phone img{display:block;width:100%}
+
+/* security */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
+.card h4{font-weight:500;font-size:20px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.card p{font-size:16px;color:var(--muted);line-height:1.45}
+.card .ic{color:var(--ok)}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:15px;height:2px;background:var(--line)}
+.ph{position:relative;padding-right:26px}
+.ph .dot{width:32px;height:32px;border-radius:50%;background:var(--bg);border:2px solid var(--brand);position:relative;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--brand);font-weight:500}
+.ph.done .dot{background:var(--brand);color:#fff}
+.ph .when{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin:18px 0 6px;font-weight:500}
+.ph b{font-weight:500;font-size:21px;display:block;margin-bottom:6px}
+.ph p{font-size:16px;color:var(--muted);line-height:1.45}
+.ph .st{display:inline-block;margin-top:10px;font-size:13px;padding:3px 10px;border-radius:20px;background:var(--ok-soft);color:var(--ok)}
+
+/* costs */
+.cost{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
+.cost .card{padding:28px}
+.cost dl{display:grid;grid-template-columns:1fr auto;gap:14px 20px;margin-top:14px}
+.cost dt{font-size:17px;color:#3b3531}
+.cost dd{font-size:17px;font-weight:500;text-align:right}
+.cost .note{font-size:14px;color:var(--muted);margin-top:14px;line-height:1.45}
+.vs{background:var(--brand-soft);border-color:#E6D3C4}
+
+/* decide */
+.asks{display:grid;gap:14px;margin-top:34px;max-width:980px}
+.ask{display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+.ask .box{width:30px;height:30px;border-radius:8px;border:2px solid var(--brand)}
+.ask b{font-weight:500;font-size:20px}
+.ask span{display:block;font-size:16px;color:var(--muted)}
+
+/* demo */
+.demo{display:grid;grid-template-columns:1fr 330px;gap:60px;align-items:center;height:100%}
+.qr{background:#fff;border-radius:20px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+.qr img{display:block;width:100%}
+.url{margin-top:26px;font-size:20px;color:#EBD2BE;word-break:break-all}
+.accs{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.accs span{font-size:15px;border:1px solid #5a473b;border-radius:20px;padding:5px 14px;color:#E6D6C9}
+
+/* nav chrome */
+#nav{position:fixed;bottom:14px;right:16px;display:flex;align-items:center;gap:8px;z-index:5}
+#nav button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(20,15,12,.55);color:#fff;font-size:18px;cursor:pointer;backdrop-filter:blur(6px)}
+#nav span{color:#cdbfb3;font-size:13px;min-width:48px;text-align:center;font-variant-numeric:tabular-nums}
+#bar{position:fixed;left:0;top:0;height:3px;background:#C69272;transition:width .3s;z-index:5}
+#rot{display:none;position:fixed;top:12px;left:50%;transform:translateX(-50%);background:rgba(20,15,12,.8);color:#eee;font-size:13px;padding:6px 14px;border-radius:20px;z-index:5;white-space:nowrap}
+@media (orientation:portrait) and (max-width:700px){#rot{display:block}}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  body{background:none;overflow:visible}
+  #deck{position:static;display:block}
+  .slide{display:flex!important;position:relative;transform:none!important;page-break-after:always;break-after:page}
+  #nav,#bar,#rot{display:none!important}
+  .foot span:last-child{visibility:visible}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="rot">Gire o celular para ver melhor ↻</div>
+<div id="deck">
+
+<!-- 1 -->
+<section class="slide dark">
+  <div class="cover">
+    <div>
+      <div class="eyebrow">Proposta para a liderança</div>
+      <h1>Sistema de Gestão da Igreja</h1>
+      <div class="rule"></div>
+      <p class="lead">Eventos, dinheiro e prestação de contas de todos os ministérios em um só lugar, com cada centavo identificado.</p>
+      <div class="by">Igreja do Nazareno Vila Anchieta · preparado por Rubi Solutions IA</div>
+    </div>
+    <img src="img/logo.png" alt="Logo Igreja do Nazareno Vila Anchieta">
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="eyebrow">O que acontece hoje</div>
+  <h2>O dinheiro chega, mas nem sempre sabemos de onde veio</h2>
+  <div class="probs">
+    <div class="prob"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg></div>
+      <div><b>Pix sem origem</b><span>Todos pagam na mesma chave. O extrato mostra só "Pix recebido · Maria · R$ 50". Foi o retiro, a cantina ou oferta?</span></div></div>
+    <div class="prob"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+      <div><b>Dinheiro vivo sem registro</b><span>Cantina, bazar e rifas passam de mão em mão até chegar à tesouraria, sem um registro de quem entregou e quanto.</span></div></div>
+    <div class="prob"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div>
+      <div><b>Eventos no mesmo dia</b><span>Cada ministério organiza a própria agenda. Datas se chocam e a igreja só descobre em cima da hora.</span></div></div>
+    <div class="prob"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg></div>
+      <div><b>Prestação de contas manual</b><span>A tesouraria junta cadernos, prints e extratos para fechar o mês. Leva tempo e depende da memória das pessoas.</span></div></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>2</span></div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="eyebrow">A proposta</div>
+  <h2>Um sistema único, usado pelo celular, onde cada ministério registra o que faz e a tesouraria enxerga tudo</h2>
+  <div class="pillars">
+    <div class="pill"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></div>
+      <h3>Agenda única</h3><p>Todos os eventos de todos os ministérios num só calendário. O sistema avisa quando duas atividades caem no mesmo dia.</p></div>
+    <div class="pill"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div>
+      <h3>Caixa por ministério</h3><p>Entradas, saídas e saldo de cada ministério e de cada evento, com comprovantes anexados.</p></div>
+    <div class="pill"><div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2"/></svg></div>
+      <h3>Pagamento identificado</h3><p>Cada evento tem o próprio link e QR Code de Pix. O valor cai na conta da igreja e já chega com nome, ministério e evento.</p></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>3</span></div>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="eyebrow">Como resolve o dinheiro sem origem</div>
+  <h2>O pagamento nasce identificado, e ninguém precisa digitar nada</h2>
+  <div class="flow">
+    <div class="step"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></div><b>Membro</b><span>Abre o link do Retiro Jovens no celular</span></div>
+    <div class="arrow"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h22M17 3l7 7-7 7"/></svg></div>
+    <div class="step"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2z"/></svg></div><b>Pix exclusivo</b><span>QR Code gerado só para essa inscrição</span></div>
+    <div class="arrow"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h22M17 3l7 7-7 7"/></svg></div>
+    <div class="step"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10l9-6 9 6M5 10v9M19 10v9M9 10v9M15 10v9M3 21h18"/></svg></div><b>Conta da igreja</b><span>O dinheiro cai na mesma conta Santander de sempre</span></div>
+    <div class="arrow"><svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h22M17 3l7 7-7 7"/></svg></div>
+    <div class="step hl"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg></div><b>Tesouraria</b><span>Vê na hora: Maria · Jovens · Retiro · R$ 150</span></div>
+  </div>
+  <div class="ways">
+    <div class="way"><b>Links e QR Codes <em class="pct" style="font-style:normal">automático</em></b><span>Inscrições, dízimos e ofertas pagos pelo sistema chegam classificados.</span></div>
+    <div class="way"><b>Dinheiro vivo e maquininha</b><span>O líder registra na hora pelo celular, com foto. A tesouraria confere ao receber.</span></div>
+    <div class="way"><b>O que escapar</b><span>A tesouraria importa o extrato do Santander e o sistema separa só o que falta classificar.</span></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>4</span></div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="split rev">
+    <div class="shot"><img src="img/tesouraria.jpg" alt="Painel da tesouraria no protótipo"></div>
+    <div>
+      <div class="eyebrow">Tela da tesouraria</div>
+      <h2 style="font-size:38px">O mês inteiro numa tela só</h2>
+      <ul class="pts">
+        <li><b>Entradas, saídas e saldo</b> de cada ministério</li>
+        <li><b>Quanto entrou sem origem</b>, destacado em vermelho</li>
+        <li><b>Dinheiro vivo a conferir</b> entregue pelos líderes</li>
+        <li><b>Relatório do mês</b> pronto para a prestação de contas</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>5</span></div>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="split rev">
+    <div class="shot"><img src="img/nao-identificados.jpg" alt="Lista de recebimentos não identificados no protótipo"></div>
+    <div>
+      <div class="eyebrow">Recebimentos sem origem</div>
+      <h2 style="font-size:38px">Uma fila que diminui a cada mês</h2>
+      <ul class="pts">
+        <li>O sistema <b>sugere o evento</b> quando o valor bate com uma inscrição</li>
+        <li>A tesouraria <b>classifica com dois toques</b></li>
+        <li>Ou <b>pergunta ao líder</b>, que responde pelo celular</li>
+        <li>Com todos usando os links, a fila tende a <b>ficar vazia</b></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>6</span></div>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="split">
+    <div class="phones" style="gap:18px">
+      <div class="phone" style="width:190px"><img src="img/membro.jpg" alt="Página de contribuição do membro"></div>
+      <div class="phone" style="width:190px;margin-top:40px"><img src="img/membro-pix.jpg" alt="Tela de pagamento via Pix"></div>
+    </div>
+    <div>
+      <div class="eyebrow">Para os membros</div>
+      <h2 style="font-size:38px">Contribuir e se inscrever fica mais fácil</h2>
+      <ul class="pts">
+        <li>Um link só, <b>sem cadastro e sem baixar aplicativo</b></li>
+        <li><b>Dízimo, oferta e inscrições</b> por Pix ou cartão</li>
+        <li><b>Comprovante na hora</b>, sem precisar mandar print para ninguém</li>
+        <li>Vê os <b>eventos abertos e as vagas</b> restantes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>7</span></div>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="eyebrow">Quem usa e o que vê</div>
+  <h2>Cada pessoa entra com o próprio acesso e vê só o que precisa</h2>
+  <table>
+    <thead><tr><th>Perfil</th><th>O que pode fazer</th></tr></thead>
+    <tbody>
+      <tr><td>Pastor</td><td>Vê todas as finanças, eventos e relatórios <span class="tag t-ro">somente leitura</span></td></tr>
+      <tr><td>Tesouraria</td><td>Todo o financeiro: confere, classifica, fecha o mês e gera relatórios</td></tr>
+      <tr><td>Secretaria</td><td>Agenda de todos os ministérios</td></tr>
+      <tr><td>Líderes (7 ministérios)</td><td>Só o próprio ministério: eventos, links de pagamento, entradas e despesas</td></tr>
+      <tr><td>Administrador</td><td>Cadastra pessoas e define permissões</td></tr>
+      <tr><td>Membros</td><td>Pagam pelo link público <span class="tag t-no">sem login</span></td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>8</span></div>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="eyebrow">Transparência e segurança</div>
+  <h2>Cada centavo com nome, data e responsável</h2>
+  <div class="grid3">
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Histórico completo</h4><p>Todo lançamento guarda quem registrou, quando, e quem conferiu. Nada é apagado sem deixar rastro.</p></div>
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Comprovantes</h4><p>Despesas e dinheiro vivo com foto do recibo. O sistema cobra o líder quando falta comprovante.</p></div>
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Acesso individual</h4><p>Login e senha por pessoa. Quando alguém deixa uma função, o acesso é desligado na hora.</p></div>
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Dinheiro sempre na conta da igreja</h4><p>O sistema não guarda dinheiro. Os pagamentos vão direto para a conta Santander da igreja.</p></div>
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Dados protegidos</h4><p>Informações dos membros guardadas com cuidado, seguindo a LGPD, com cópia de segurança automática.</p></div>
+    <div class="card"><h4><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Vários ao mesmo tempo</h4><p>Pastor, tesouraria e líderes usam juntos, cada um no seu celular, com tudo atualizado em tempo real.</p></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>9</span></div>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="eyebrow">Como vamos implantar</div>
+  <h2>Começar pequeno, com um piloto, antes de envolver todos</h2>
+  <div class="tl">
+    <div class="ph done"><div class="dot">✓</div><div class="when">Concluído</div><b>Protótipo</b><p>Demonstração navegável com dados de exemplo, para a liderança avaliar.</p><span class="st">pronto</span></div>
+    <div class="ph"><div class="dot">2</div><div class="when">4 a 6 semanas</div><b>Primeira versão</b><p>Agenda, caixa por ministério, links de pagamento e painel da tesouraria funcionando de verdade.</p></div>
+    <div class="ph"><div class="dot">3</div><div class="when">1 mês</div><b>Piloto</b><p>Tesouraria e dois ministérios usando. Ajustes a partir do que eles pedirem.</p></div>
+    <div class="ph"><div class="dot">4</div><div class="when">Depois do piloto</div><b>Todos os ministérios</b><p>Treinamento rápido dos líderes e divulgação do link para a igreja.</p></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>10</span></div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="eyebrow">Custos</div>
+  <h2>Sem mensalidade de software no começo</h2>
+  <div class="cost">
+    <div class="card">
+      <h4>Para manter o sistema no ar</h4>
+      <dl class="num">
+        <dt>Hospedagem e banco de dados</dt><dd>R$ 0 no início</dd>
+        <dt>Se a igreja crescer muito no uso</dt><dd>~US$ 25/mês</dd>
+        <dt>Taxa por pagamento online</dt><dd>cobrada pelo intermediário</dd>
+      </dl>
+      <p class="note">A taxa por Pix e por cartão depende do intermediário de pagamento escolhido (Asaas, Mercado Pago, Efí ou o próprio Santander). Vamos comparar as tarifas atuais antes de escolher.</p>
+    </div>
+    <div class="card vs">
+      <h4>Para comparação</h4>
+      <dl class="num">
+        <dt>Sistemas prontos para igrejas</dt><dd>R$ 60 a 400/mês</dd>
+        <dt>Feitos para a nossa rotina</dt><dd>não</dd>
+        <dt>Caixa separado por ministério</dt><dd>nem sempre</dd>
+      </dl>
+      <p class="note">Aqui o sistema é feito sob medida para a Vila Anchieta: com os nossos ministérios, a nossa conta e o jeito que a tesouraria já trabalha.</p>
+    </div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>11</span></div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="eyebrow">O que precisamos decidir hoje</div>
+  <h2>Quatro decisões para começar</h2>
+  <div class="asks">
+    <div class="ask"><div class="box"></div><div><b>Aprovar o piloto de 1 mês</b><span>Tesouraria e dois ministérios usando a primeira versão</span></div></div>
+    <div class="ask"><div class="box"></div><div><b>Escolher os dois ministérios do piloto</b><span>Sugestão: Jovens e Mulheres, que têm mais eventos pagos</span></div></div>
+    <div class="ask"><div class="box"></div><div><b>Liberar os dados da conta da igreja</b><span>CNPJ e conta Santander para ativar os pagamentos por Pix</span></div></div>
+    <div class="ask"><div class="box"></div><div><b>Definir um responsável por ministério</b><span>A pessoa que vai registrar eventos e valores no sistema</span></div></div>
+  </div>
+  <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>12</span></div>
+</section>
+
+<!-- 13 -->
+<section class="slide dark">
+  <div class="demo">
+    <div>
+      <div class="eyebrow">Experimente agora</div>
+      <h1 style="font-size:56px">Aponte a câmera do celular para o código</h1>
+      <p class="lead">O protótipo usa dados de exemplo. Nenhum valor é cobrado.</p>
+      <div class="url">brunarubi71-ux.github.io/rubi-solutions-ia/igreja-vila-anchieta</div>
+      <div class="accs"><span>Entre como Pastor</span><span>Tesouraria</span><span>Líder de um ministério</span><span>Sou membro</span></div>
+    </div>
+    <div class="qr"><img src="img/qr-prototipo.svg" alt="QR Code para abrir o protótipo"></div>
+  </div>
+</section>
+
+</div>
+<div id="nav"><button id="prev" aria-label="Slide anterior">‹</button><span id="count">1 / 13</span><button id="next" aria-label="Próximo slide">›</button></div>
+
+<script>
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0;
+try { const h = parseInt(location.hash.replace('#','')); if(h>0 && h<=slides.length) cur = h-1; } catch(e){}
+function fit(){
+  const s = Math.min(innerWidth/1280, innerHeight/720);
+  slides.forEach(el => el.style.transform = `scale(${s})`);
+}
+function show(i){
+  cur = Math.max(0, Math.min(slides.length-1, i));
+  slides.forEach((s,k)=>s.classList.toggle('on', k===cur));
+  document.getElementById('count').textContent = `${cur+1} / ${slides.length}`;
+  document.getElementById('bar').style.width = ((cur+1)/slides.length*100)+'%';
+  try { history.replaceState(null,'','#'+(cur+1)); } catch(e){}
+}
+addEventListener('resize', fit);
+addEventListener('keydown', e => {
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){ e.preventDefault(); show(cur+1); }
+  if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){ e.preventDefault(); show(cur-1); }
+  if(e.key==='Home') show(0); if(e.key==='End') show(slides.length-1);
+});
+document.getElementById('next').onclick = e => { e.stopPropagation(); show(cur+1); };
+document.getElementById('prev').onclick = e => { e.stopPropagation(); show(cur-1); };
+document.getElementById('deck').addEventListener('click', e => { show(e.clientX > innerWidth/3 ? cur+1 : cur-1); });
+let tx = null;
+addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+addEventListener('touchend', e => { if(tx===null) return; const dx = e.changedTouches[0].clientX - tx; if(Math.abs(dx) > 40){ show(dx<0 ? cur+1 : cur-1); } tx = null; });
+fit(); show(cur);
+</script>
+</body>
+</html>
