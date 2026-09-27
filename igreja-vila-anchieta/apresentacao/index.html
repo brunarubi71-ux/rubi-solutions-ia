@@ -114,13 +114,11 @@ td:first-child{font-weight:500;white-space:nowrap}
 .ph .st{display:inline-block;margin-top:10px;font-size:13px;padding:3px 10px;border-radius:20px;background:var(--ok-soft);color:var(--ok)}
 
 /* costs */
-.cost{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}
-.cost .card{padding:28px}
-.cost dl{display:grid;grid-template-columns:1fr auto;gap:14px 20px;margin-top:14px}
-.cost dt{font-size:17px;color:#3b3531}
-.cost dd{font-size:17px;font-weight:500;text-align:right}
-.cost .note{font-size:14px;color:var(--muted);margin-top:14px;line-height:1.45}
-.vs{background:var(--brand-soft);border-color:#E6D3C4}
+.costs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.ct{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:34px 30px;display:flex;flex-direction:column;gap:12px}
+.ct .lbl{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);font-weight:500}
+.ct .big{font-size:34px;line-height:1.1;font-weight:400}
+.ct p{font-size:18px;color:var(--muted);line-height:1.45}
 
 /* decide */
 .asks{display:grid;gap:14px;margin-top:34px;max-width:980px}
@@ -333,26 +331,11 @@ td:first-child{font-weight:500;white-space:nowrap}
 <!-- 11 -->
 <section class="slide">
   <div class="eyebrow">Custos</div>
-  <h2>Sem mensalidade de software no começo</h2>
-  <div class="cost">
-    <div class="card">
-      <h4>Para manter o sistema no ar</h4>
-      <dl class="num">
-        <dt>Hospedagem e banco de dados</dt><dd>R$ 0 no início</dd>
-        <dt>Se a igreja crescer muito no uso</dt><dd>~US$ 25/mês</dd>
-        <dt>Taxa por pagamento online</dt><dd>cobrada pelo intermediário</dd>
-      </dl>
-      <p class="note">A taxa por Pix e por cartão depende do intermediário de pagamento escolhido (Asaas, Mercado Pago, Efí ou o próprio Santander). Vamos comparar as tarifas atuais antes de escolher.</p>
-    </div>
-    <div class="card vs">
-      <h4>Para comparação</h4>
-      <dl class="num">
-        <dt>Sistemas prontos para igrejas</dt><dd>R$ 60 a 400/mês</dd>
-        <dt>Feitos para a nossa rotina</dt><dd>não</dd>
-        <dt>Caixa separado por ministério</dt><dd>nem sempre</dd>
-      </dl>
-      <p class="note">Aqui o sistema é feito sob medida para a Vila Anchieta: com os nossos ministérios, a nossa conta e o jeito que a tesouraria já trabalha.</p>
-    </div>
+  <h2>O que a igreja vai pagar</h2>
+  <div class="costs">
+    <div class="ct"><span class="lbl">Sistema no ar</span><span class="big num">R$ 0</span><p>Hospedagem e banco de dados gratuitos no início.</p></div>
+    <div class="ct"><span class="lbl">Pagamentos online</span><span class="big">Taxa por Pix</span><p>Cobrada pelo banco ou intermediário, só quando alguém paga (Pix ou cartão). Vamos escolher a menor tarifa.</p></div>
+    <div class="ct"><span class="lbl">Implantação e suporte</span><span class="big">Proposta à parte</span><p>Valor apresentado diretamente à liderança.</p></div>
   </div>
   <div class="foot"><span>IGREJA DO NAZARENO VILA ANCHIETA</span><span>11</span></div>
 </section>
