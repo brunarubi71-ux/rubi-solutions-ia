@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cantina Vila Anchieta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F0EB; --surface:#FFFFFF; --surface2:#FAF7F3; --ink:#262320; --muted:#7A716A; --line:#E6DED5;
+  --brand:#8D634B; --brand-dark:#6E4B37; --brand-soft:#EFE4DB; --brand-ink:#6E4B37; --banner:#6E4B37;
+  --ok:#2F7D5B; --ok-soft:#E3F1EA; --warn:#B26B0A; --warn-soft:#FBEFD9; --danger:#B4443A; --danger-soft:#F8E3E0;
+  --salg:#B8733F; --doce:#B5566B; --beb:#2A8277; --toast:#262320;
+  --shadow:0 1px 2px rgba(60,40,20,.06),0 4px 16px rgba(60,40,20,.05);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#1A1613; --surface:#241F1B; --surface2:#2B2520; --ink:#EFE8E1; --muted:#A99D93; --line:#3A322B;
+  --brand:#B07E5F; --brand-dark:#96694D; --brand-soft:#3A2B21; --brand-ink:#E6C3A8;
+  --ok:#5CBF8E; --ok-soft:#1D3529; --warn:#E3A64A; --warn-soft:#3B2D15; --danger:#E5857A; --danger-soft:#3E211D;
+  --salg:#D08E5A; --doce:#D7798D; --beb:#4FB0A3; --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#1A1613; --surface:#241F1B; --surface2:#2B2520; --ink:#EFE8E1; --muted:#A99D93; --line:#3A322B;
+  --brand:#B07E5F; --brand-dark:#96694D; --brand-soft:#3A2B21; --brand-ink:#E6C3A8;
+  --ok:#5CBF8E; --ok-soft:#1D3529; --warn:#E3A64A; --warn-soft:#3B2D15; --danger:#E5857A; --danger-soft:#3E211D;
+  --salg:#D08E5A; --doce:#D7798D; --beb:#4FB0A3; --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Jost',system-ui,sans-serif;font-size:15px;line-height:1.45;min-height:100vh;-webkit-tap-highlight-color:transparent}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.num{font-variant-numeric:tabular-nums}
+
+.demo{background:var(--banner);color:#F6EEE7;font-size:12.5px;padding:7px 16px;text-align:center}
+.demo button{background:none;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:0 10px;margin-left:6px;font-size:12px;color:#fff}
+header{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.hwrap{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;min-width:0}
+.brand img{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);flex:none}
+.brand .t1{letter-spacing:.16em;font-weight:500;font-size:13.5px}
+.brand .t2{letter-spacing:.14em;font-size:10.5px;color:var(--brand);text-transform:uppercase}
+.who{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.sub{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto}
+.sub button{border:0;background:none;padding:10px 14px;font-size:14px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.sub button.on{color:var(--ink);border-color:var(--brand);font-weight:500}
+.pill{display:inline-block;min-width:18px;padding:0 6px;border-radius:10px;background:var(--danger);color:#fff;font-size:11px;text-align:center;margin-left:4px}
+
+main{max-width:1100px;margin:0 auto;padding:18px 16px 120px}
+h1{font-weight:500;font-size:23px;text-wrap:balance}
+h2{font-weight:500;font-size:16px;margin-bottom:12px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand)}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.muted{color:var(--muted)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{border-color:var(--brand)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.big{padding:14px 18px;font-size:16px;border-radius:12px;width:100%}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.prod:focus-visible,.pay:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi .l{font-size:12.5px;color:var(--muted)}
+.kpi .v{font-size:22px;font-weight:500}
+.kpi .s{font-size:12px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:start}
+.grid2>*{min-width:0}
+.stack{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.badge{font-size:12px;padding:2px 9px;border-radius:20px;white-space:nowrap;display:inline-block}
+.b-ok{background:var(--ok-soft);color:var(--ok)} .b-warn{background:var(--warn-soft);color:var(--warn)} .b-danger{background:var(--danger-soft);color:var(--danger)}
+.b-muted{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+table{width:100%;border-collapse:collapse}
+th{font-weight:500;font-size:12px;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.r{text-align:right}
+.tscroll{overflow-x:auto;margin:0 -16px;padding:0 16px}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--surface2)}
+.bar{height:8px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px;background:var(--brand)}
+
+/* login */
+.login{max-width:440px;margin:6px auto 0}
+.hero{text-align:center;padding:6px 0 16px}
+.hero img{width:120px;height:120px;border-radius:50%;box-shadow:var(--shadow)}
+.hero h1{margin-top:10px}
+.role{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.role:hover{border-color:var(--brand)}
+.role .ic{width:46px;height:46px;border-radius:12px;background:var(--brand-soft);color:var(--brand-ink);display:flex;align-items:center;justify-content:center;flex:none}
+.role b{font-weight:500;display:block;font-size:16px}
+.role small{color:var(--muted);font-size:13px}
+.back{display:block;text-align:center;margin-top:14px;color:var(--brand-ink);font-size:14px}
+
+/* PDV */
+.shift{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:12px}
+.shift b{font-weight:500}
+.shift small{display:block;color:var(--muted);font-size:12.5px}
+.cats{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.cats button{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:6px 14px;font-size:14px;white-space:nowrap}
+.cats button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.prods{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.prod{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 12px 12px;text-align:left;min-height:104px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow);transition:transform .08s}
+.prod:active{transform:scale(.97)}
+.prod .nm{font-weight:500;font-size:15.5px;line-height:1.25}
+.prod .pr{font-size:17px;font-weight:500;margin-top:6px}
+.prod .st{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.prod .q{position:absolute;top:8px;right:8px;min-width:26px;height:26px;border-radius:13px;background:var(--brand);color:#fff;font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:0 7px}
+.prod.low .st{color:var(--warn)}
+.prod:disabled{opacity:.45}
+.cartbar{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);z-index:30;box-shadow:0 -6px 20px rgba(0,0,0,.06)}
+.cartbar .in{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.cartbar .tot{flex:1;min-width:0}
+.cartbar .tot b{font-size:22px;font-weight:500;display:block;line-height:1.1}
+.cartbar .tot small{color:var(--muted);font-size:13px}
+
+/* sheet / modal */
+#ov{position:fixed;inset:0;background:rgba(38,35,32,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+#ov.show{display:flex}
+#modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:520px;max-height:92vh;overflow:auto;padding:22px 18px calc(20px + env(safe-area-inset-bottom,0px));position:relative}
+@media (min-width:640px){#ov{align-items:center;padding:16px}#modal{border-radius:18px}}
+.x{position:absolute;top:12px;right:12px;border:0;background:var(--surface2);width:34px;height:34px;border-radius:50%;font-size:18px;line-height:1}
+#modal h3{font-weight:500;font-size:19px;padding-right:34px}
+#modal .lead{color:var(--muted);font-size:14px;margin:2px 0 14px}
+.f{display:grid;gap:12px}
+.f label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.f .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+select,input[type=text],input[type=number],input[type=date]{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px;font-size:15px;width:100%;color:var(--ink)}
+.lines{display:grid;gap:8px;margin-bottom:14px}
+.line{display:flex;align-items:center;gap:10px}
+.line .n{flex:1;min-width:0}
+.line .n small{display:block;color:var(--muted);font-size:12.5px}
+.stp{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stp button{border:0;background:var(--surface2);width:34px;height:34px;font-size:18px}
+.stp span{min-width:30px;text-align:center;font-weight:500}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px;margin-bottom:14px}
+.total b{font-size:28px;font-weight:500}
+.pays{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pay{border:1px solid var(--line);background:var(--surface2);border-radius:14px;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:15px;font-weight:500}
+.pay svg{color:var(--brand)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.quick button{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:10px 4px;font-size:15px}
+.change{background:var(--ok-soft);color:var(--ok);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.change b{font-size:26px;font-weight:500}
+.change.neg{background:var(--danger-soft);color:var(--danger)}
+.qr{display:flex;flex-direction:column;align-items:center;gap:8px;margin:6px 0 12px}
+.qr svg{width:200px;height:200px;border:8px solid #fff;box-shadow:0 0 0 1px var(--line);border-radius:6px}
+.info{background:var(--brand-soft);color:var(--brand-ink);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.done{text-align:center;padding:8px 0}
+.done .ck{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:8px}
+.sum{display:grid;gap:8px;margin:6px 0 14px}
+.sum div{display:flex;justify-content:space-between;font-size:15px}
+.sum .t{border-top:1px solid var(--line);padding-top:8px;font-weight:500}
+.diff{border-radius:12px;padding:12px 14px;margin:10px 0;font-size:15px}
+.diff.ok{background:var(--ok-soft);color:var(--ok)} .diff.bad{background:var(--danger-soft);color:var(--danger)} .diff.more{background:var(--warn-soft);color:var(--warn)}
+
+#toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--toast);color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;z-index:60;opacity:0;visibility:hidden;transition:all .25s;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.nojs{max-width:520px;margin:40px auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center}
+</style>
+</head>
+<body>
+<div class="demo"><b>Protótipo de demonstração</b> · produtos e valores fictícios <button data-act="tour">Como testar</button><button data-act="reset">Reiniciar</button></div>
+<header>
+  <div class="hwrap">
+    <div class="brand"><img src="../apresentacao/img/logo.png" alt="Logo Igreja do Nazareno Vila Anchieta"><div><div class="t1">CANTINA</div><div class="t2">Vila Anchieta</div></div></div>
+    <div class="who" id="who"></div>
+  </div>
+  <div class="sub" id="sub"></div>
+</header>
+<main id="main"><noscript><div class="nojs"><b>Abra este link no Safari ou no Chrome.</b></div></noscript></main>
+<div id="cart"></div>
+<div id="ov"><div id="modal" role="dialog" aria-modal="true"></div></div>
+<div id="toast" role="status"></div>
+
+<script>
+const TODAY = new Date(2026,8,28);
+const CULTOS = ['Quarta · 20h','Domingo · manhã','Domingo · noite'];
+const CATS = {Salgados:'var(--salg)', Doces:'var(--doce)', Bebidas:'var(--beb)'};
+const OPS = ['Ana Paula','Márcia','José Carlos','Priscila','Rute','Samuel','Débora','Irmã Cida'];
+const brl = c => (c/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const pad = n => String(n).padStart(2,'0');
+const fd = d => pad(d.getDate())+'/'+pad(d.getMonth()+1);
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+let rnd; const ri=(a,b)=>a+Math.floor(rnd()*(b-a+1)); const pick=a=>a[Math.floor(rnd()*a.length)];
+
+let S, uid;
+function seed(){
+  rnd = mulberry(11); uid = 1;
+  const P = (id,name,cat,price,cost,stock,min,val) => ({id,name,cat,price,cost,stock,min,val:val||null});
+  S = {view:'login', role:null, tab:'resumo', cat:'Todos', cart:{}, caixa:null, pay:null,
+    products:[
+      P('cox','Coxinha','Salgados',700,350,24,10), P('pas','Pastel de carne','Salgados',700,300,18,10),
+      P('esf','Esfiha','Salgados',600,280,20,10), P('pdq','Pão de queijo (3 un.)','Salgados',500,200,0,10),
+      P('hot','Cachorro-quente','Salgados',800,380,15,8), P('bol','Bolo de cenoura (fatia)','Doces',600,220,12,6,new Date(2026,8,29)),
+      P('bri','Brigadeiro','Doces',300,100,40,15), P('pip','Pipoca','Doces',400,120,25,10),
+      P('ref','Refrigerante lata','Bebidas',600,330,4,12), P('agu','Água 500 ml','Bebidas',300,120,30,12),
+      P('suc','Suco natural','Bebidas',600,250,16,8,new Date(2026,9,2)), P('caf','Café','Bebidas',300,60,50,20),
+    ], sales:[], closings:[], purchases:[]};
+  // histórico de setembro
+  const cultos = [];
+  [2,9,16,23].forEach(d=>cultos.push([new Date(2026,8,d,20),'Quarta · 20h']));
+  [6,13,20,27].forEach(d=>{cultos.push([new Date(2026,8,d,10),'Domingo · manhã']);cultos.push([new Date(2026,8,d,19),'Domingo · noite']);});
+  cultos.sort((a,b)=>a[0]-b[0]);
+  const weights = {cox:6,pas:5,esf:4,pdq:4,hot:3,bol:3,bri:5,pip:2,ref:6,agu:4,suc:3,caf:5};
+  const bag = []; Object.entries(weights).forEach(([k,w])=>{for(let i=0;i<w;i++)bag.push(k)});
+  cultos.forEach(([date,culto],ci)=>{
+    const op = OPS[ci%OPS.length], n = culto==='Domingo · manhã'?ri(22,34):ri(28,45);
+    const tot = {Dinheiro:0,Pix:0,Cartão:0};
+    for(let i=0;i<n;i++){
+      const items = {}; const k = ri(1,3); for(let j=0;j<k;j++){const p=pick(bag); items[p]=(items[p]||0)+1;}
+      const lines = Object.entries(items).map(([pid,q])=>{const p=S.products.find(x=>x.id===pid);return {pid,q,price:p.price,cost:p.cost}});
+      const total = lines.reduce((a,l)=>a+l.q*l.price,0), r = rnd(), method = r<.45?'Pix':r<.75?'Dinheiro':'Cartão';
+      tot[method]+=total;
+      S.sales.push({id:uid++,date:new Date(date.getTime()+i*120000),culto,op,lines,total,method});
+    }
+    const troco = 5000, expected = troco+tot.Dinheiro;
+    const diff = ci===4 ? -500 : ci===9 ? 200 : 0;
+    S.closings.push({id:uid++,date,culto,op,troco,cash:tot.Dinheiro,pix:tot.Pix,card:tot.Cartão,expected,counted:expected+diff,diff,
+      status: ci>=cultos.length-1 ? 'conferir' : 'ok', note: diff<0?'Faltou troco no fim, acho que dei a mais':diff>0?'':''});
+  });
+  const buy = (d,who,desc,total,items) => S.purchases.push({id:uid++,date:new Date(2026,8,d),who,desc,total,items,receipt:true});
+  buy(1,'Atacadista','Refrigerantes, água e sucos',41280,'4 fardos refrigerante, 3 fardos água, 16 sucos');
+  buy(5,'Salgaderia da Vila','Salgados congelados',52500,'150 salgados sortidos');
+  buy(12,'Atacadista','Café, açúcar, copos e guardanapos',18650,'Descartáveis e café');
+  buy(19,'Salgaderia da Vila','Salgados congelados',49000,'140 salgados sortidos');
+  buy(26,'Confeitaria','Bolos e brigadeiros',16800,'4 bolos, 80 brigadeiros');
+}
+
+/* ---------- helpers ---------- */
+const prod = id => S.products.find(p=>p.id===id);
+const cartLines = () => Object.entries(S.cart).filter(([,q])=>q>0).map(([pid,q])=>({p:prod(pid),q}));
+const cartTotal = () => cartLines().reduce((a,l)=>a+l.q*l.p.price,0);
+const cartCount = () => cartLines().reduce((a,l)=>a+l.q,0);
+const status = p => p.stock<=0?'zero':p.stock<p.min?'low':null;
+const daysTo = d => Math.round((d - TODAY)/86400000);
+const alerts = () => S.products.filter(p=>status(p) || (p.val && daysTo(p.val)<=2));
+function toast(m){const t=document.getElementById('toast');t.innerHTML=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3200);}
+function openModal(h){document.getElementById('modal').innerHTML='<button class="x" data-act="close" aria-label="Fechar">×</button>'+h;document.getElementById('ov').classList.add('show');}
+function closeModal(){document.getElementById('ov').classList.remove('show');}
+function qrSvg(s){let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;const r=mulberry(h),N=25;let o='';
+  const F=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3"/>`;
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){const f=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);if(!f&&r()<.5)o+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;}
+  return `<svg viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" fill="#262320"><rect width="${N}" height="${N}" fill="#fff"/>${o}${F(0,0)}${F(N-7,0)}${F(0,N-7)}</svg>`;}
+const IC = {
+  cash:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>',
+  pix:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM18 14h2"/></svg>',
+  card:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>',
+  cart:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2 11h11l2-8H6"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>',
+  box:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>',
+};
+
+/* ---------- render ---------- */
+function render(){
+  const who = document.getElementById('who'), sub = document.getElementById('sub');
+  who.innerHTML = S.role ? `<span>${S.role==='vend'?'Caixa':'Gestão'}</span><button class="btn sm" data-act="logout">Sair</button>` : '';
+  if(S.role==='gest'){
+    const al = alerts().length, conf = S.closings.filter(c=>c.status==='conferir').length;
+    sub.innerHTML = [['resumo','Resumo'],['estoque','Estoque'+(al?`<span class="pill">${al}</span>`:'')],['compras','Compras'],['fech','Fechamentos'+(conf?`<span class="pill">${conf}</span>`:'')]]
+      .map(([k,l])=>`<button data-act="tab" data-v="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('');
+    sub.style.display='';
+  } else sub.style.display='none';
+  const m = document.getElementById('main');
+  m.innerHTML = S.view==='login' ? vLogin() : S.view==='abrir' ? vAbrir() : S.view==='pdv' ? vPdv() : ({resumo:vResumo,estoque:vEstoque,compras:vCompras,fech:vFech})[S.tab]();
+  renderCart();
+}
+function renderCart(){
+  const c = document.getElementById('cart');
+  if(S.view!=='pdv'){ c.innerHTML=''; return; }
+  const n = cartCount();
+  c.innerHTML = `<div class="cartbar"><div class="in"><button class="btn" data-act="viewCart" ${n?'':'disabled'} aria-label="Ver itens">${IC.cart}<span class="num">${n}</span></button>
+    <div class="tot"><b class="num">${brl(cartTotal())}</b><small>${n?n+(n>1?' itens':' item'):'Toque nos produtos para vender'}</small></div>
+    <button class="btn pri" style="padding:12px 22px;font-size:16px" data-act="charge" ${n?'':'disabled'}>Cobrar</button></div></div>`;
+}
+
+function vLogin(){
+  return `<div class="login"><div class="hero"><img src="../apresentacao/img/logo.png" alt=""><h1>Cantina da igreja</h1><p class="muted">Vendas e estoque pelo celular</p></div>
+    <button class="role" data-act="asVend"><span class="ic">${IC.cart}</span><span><b>Estou no caixa hoje</b><small>Quem vai vender neste culto</small></span></button>
+    <button class="role" data-act="asGest"><span class="ic">${IC.box}</span><span><b>Responsável da cantina / Tesouraria</b><small>Estoque, compras, relatórios e conferência</small></span></button>
+    <a class="back" href="../">‹ Voltar ao Sistema de Gestão da Igreja</a></div>`;
+}
+function vAbrir(){
+  const def = TODAY.getDay()===0 ? (new Date().getHours()<14?1:2) : 0;
+  return `<div class="login"><div class="eyebrow">Abrir caixa</div><h1 style="margin-bottom:6px">Quem está vendendo hoje?</h1>
+    <p class="muted" style="margin-bottom:16px">Fica registrado quem cuidou do caixa em cada culto.</p>
+    <form class="f card" data-form="abrir">
+      <label>Seu nome<input type="text" name="op" required value="Ana Paula" autocomplete="name"></label>
+      <label>Culto<select name="culto">${CULTOS.map((c,i)=>`<option ${i===def?'selected':''}>${c}</option>`).join('')}</select></label>
+      <label>Troco inicial na gaveta (R$)<input type="number" name="troco" min="0" step="0.01" value="50" inputmode="decimal"></label>
+      <button class="btn pri big">Abrir caixa</button></form></div>`;
+}
+function vPdv(){
+  const cx = S.caixa, sold = cx.sales.reduce((a,s)=>a+s.total,0);
+  const list = S.products.filter(p=>S.cat==='Todos'||p.cat===S.cat);
+  return `<div class="shift"><div><b>${esc(cx.culto)}</b><small>${esc(cx.op)} · ${cx.sales.length} vendas · ${brl(sold)}</small></div><button class="btn sm" data-act="fechar">Fechar caixa</button></div>
+  <div class="cats">${['Todos',...Object.keys(CATS)].map(c=>`<button data-act="cat" data-v="${c}" class="${S.cat===c?'on':''}">${c}</button>`).join('')}</div>
+  <div class="prods">${list.map(p=>{const q=S.cart[p.id]||0, st=status(p), left=p.stock-q;
+    return `<button class="prod ${st==='low'?'low':''}" data-act="add" data-v="${p.id}" ${left<=0?'disabled':''}>
+      ${q?`<span class="q num">${q}</span>`:''}<span class="nm">${esc(p.name)}</span>
+      <span><span class="pr num">${brl(p.price)}</span><span class="st"><span class="dot" style="background:${CATS[p.cat]}"></span>${p.stock<=0?'Esgotado':left+' em estoque'}</span></span></button>`}).join('')}</div>`;
+}
+
+function periodSales(){ return S.sales; }
+function vResumo(){
+  const sales = periodSales(), total = sales.reduce((a,s)=>a+s.total,0);
+  const cost = sales.reduce((a,s)=>a+s.lines.reduce((b,l)=>b+l.q*l.cost,0),0);
+  const byP = {}; sales.forEach(s=>s.lines.forEach(l=>{byP[l.pid]=byP[l.pid]||{q:0,v:0};byP[l.pid].q+=l.q;byP[l.pid].v+=l.q*l.price;}));
+  const top = Object.entries(byP).sort((a,b)=>b[1].v-a[1].v).slice(0,6), max = top[0]?top[0][1].v:1;
+  const byM = {Pix:0,Dinheiro:0,Cartão:0}; sales.forEach(s=>byM[s.method]+=s.total);
+  const cl = S.closings.slice().sort((a,b)=>b.date-a.date).slice(0,6);
+  const al = alerts();
+  return `<div class="head"><div><div class="eyebrow">Cantina</div><h1>Setembro de 2026</h1></div><button class="btn pri" data-act="goPdv">Abrir tela de vendas</button></div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Vendido</div><div class="v num">${brl(total)}</div><div class="s">${sales.length} vendas em ${S.closings.length} cultos</div></div>
+    <div class="kpi"><div class="l">Custo dos produtos</div><div class="v num">${brl(cost)}</div><div class="s">pelo preço de compra</div></div>
+    <div class="kpi"><div class="l">Lucro</div><div class="v num" style="color:var(--ok)">${brl(total-cost)}</div><div class="s">margem de ${Math.round((total-cost)/total*100)}%</div></div>
+    <div class="kpi"><div class="l">Média por culto</div><div class="v num">${brl(Math.round(total/S.closings.length))}</div><div class="s">&nbsp;</div></div>
+  </div>
+  <div class="grid2">
+    <div class="stack">
+      <div class="card"><h2>Últimos cultos</h2><div class="tscroll"><table><thead><tr><th>Culto</th><th>No caixa</th><th class="r">Vendido</th><th>Conferência</th></tr></thead><tbody>
+        ${cl.map(c=>`<tr><td>${fd(c.date)} · ${c.culto}</td><td>${esc(c.op)}</td><td class="r num">${brl(c.cash+c.pix+c.card)}</td><td>${c.status==='conferir'?'<span class="badge b-warn">A conferir</span>':c.diff<0?`<span class="badge b-danger">Faltou ${brl(-c.diff)}</span>`:c.diff>0?`<span class="badge b-warn">Sobrou ${brl(c.diff)}</span>`:'<span class="badge b-ok">Bateu</span>'}</td></tr>`).join('')}
+      </tbody></table></div></div>
+      <div class="card"><h2>Como pagaram</h2>${Object.entries(byM).map(([k,v])=>`<div style="display:grid;grid-template-columns:80px 1fr 90px;gap:10px;align-items:center;margin:8px 0"><span>${k}</span><div class="bar"><i style="width:${v/total*100}%"></i></div><span class="r num">${Math.round(v/total*100)}%</span></div>`).join('')}</div>
+    </div>
+    <div class="stack">
+      <div class="card"><h2>Precisa de atenção</h2>${al.length?al.map(p=>`<div style="display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)"><span>${esc(p.name)}</span>${p.stock<=0?'<span class="badge b-danger">Esgotado</span>':status(p)?`<span class="badge b-warn">Só ${p.stock}</span>`:`<span class="badge b-warn">Vence ${daysTo(p.val)<=0?'hoje':daysTo(p.val)===1?'amanhã':'em '+daysTo(p.val)+' dias'}</span>`}</div>`).join(''):'<p class="muted">Tudo em ordem.</p>'}
+        <button class="btn sm" style="margin-top:10px" data-act="tab" data-v="estoque">Ver estoque</button></div>
+      <div class="card"><h2>Mais vendidos</h2>${top.map(([pid,v])=>`<div style="margin:9px 0"><div style="display:flex;justify-content:space-between;font-size:14px"><span>${esc(prod(pid).name)}</span><span class="num muted">${v.q} un · ${brl(v.v)}</span></div><div class="bar" style="margin-top:4px"><i style="width:${v.v/max*100}%;background:${CATS[prod(pid).cat]}"></i></div></div>`).join('')}</div>
+    </div>
+  </div>`;
+}
+function vEstoque(){
+  return `<div class="head"><div><div class="eyebrow">Cantina</div><h1>Estoque</h1><p class="muted" style="font-size:14px">Cada venda dá baixa sozinha. Toque num produto para ajustar.</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="newProd">+ Produto</button><button class="btn pri" data-act="newBuy">+ Registrar compra</button></div></div>
+  <div class="card"><div class="tscroll"><table><thead><tr><th>Produto</th><th class="r">Estoque</th><th class="r">Custo</th><th class="r">Venda</th><th class="r">Lucro/un.</th><th>Situação</th></tr></thead><tbody>
+  ${S.products.map(p=>{const st=status(p), v=p.val?daysTo(p.val):null;return `<tr class="click" data-act="adjust" data-v="${p.id}"><td><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${CATS[p.cat]}"></span>${esc(p.name)}</span></td>
+    <td class="r num">${p.stock} <span class="muted" style="font-size:12px">/ mín. ${p.min}</span></td><td class="r num">${brl(p.cost)}</td><td class="r num">${brl(p.price)}</td><td class="r num" style="color:var(--ok)">${brl(p.price-p.cost)}</td>
+    <td>${st==='zero'?'<span class="badge b-danger">Esgotado</span>':st==='low'?'<span class="badge b-warn">Comprar</span>':v!==null&&v<=2?`<span class="badge b-warn">Vence ${v<=0?'hoje':v===1?'amanhã':'em '+v+' dias'}</span>`:'<span class="badge b-ok">OK</span>'}</td></tr>`}).join('')}
+  </tbody></table></div></div>`;
+}
+function vCompras(){
+  const tot = S.purchases.reduce((a,p)=>a+p.total,0);
+  return `<div class="head"><div><div class="eyebrow">Cantina</div><h1>Compras</h1><p class="muted" style="font-size:14px">Cada compra aumenta o estoque e vira despesa da cantina para a tesouraria.</p></div><button class="btn pri" data-act="newBuy">+ Registrar compra</button></div>
+  <div class="kpis"><div class="kpi"><div class="l">Gasto em compras no mês</div><div class="v num">${brl(tot)}</div><div class="s">${S.purchases.length} compras, todas com nota</div></div></div>
+  <div class="card"><div class="tscroll"><table><thead><tr><th>Data</th><th>Onde</th><th>O quê</th><th class="r">Valor</th><th>Nota</th></tr></thead><tbody>
+  ${S.purchases.slice().sort((a,b)=>b.date-a.date).map(p=>`<tr><td class="num">${fd(p.date)}</td><td>${esc(p.who)}</td><td>${esc(p.desc)}<div class="muted" style="font-size:12px">${esc(p.items)}</div></td><td class="r num">${brl(p.total)}</td><td>${p.receipt?'<span class="badge b-ok">Anexada</span>':'<span class="badge b-warn">Falta</span>'}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+}
+function vFech(){
+  const list = S.closings.slice().sort((a,b)=>b.date-a.date);
+  return `<div class="head"><div><div class="eyebrow">Tesouraria</div><h1>Fechamentos de caixa</h1><p class="muted" style="font-size:14px">O dinheiro contado por quem vendeu, comparado com o que o sistema registrou.</p></div></div>
+  <div class="card"><div class="tscroll"><table><thead><tr><th>Culto</th><th>No caixa</th><th class="r">Pix</th><th class="r">Cartão</th><th class="r">Dinheiro esperado</th><th class="r">Contado</th><th>Situação</th></tr></thead><tbody>
+  ${list.map(c=>`<tr><td class="num">${fd(c.date)} · ${c.culto}</td><td>${esc(c.op)}${c.note?`<div class="muted" style="font-size:12px">"${esc(c.note)}"</div>`:''}</td><td class="r num">${brl(c.pix)}</td><td class="r num">${brl(c.card)}</td><td class="r num">${brl(c.expected)}</td><td class="r num">${brl(c.counted)}</td>
+    <td>${c.status==='conferir'?`<button class="btn sm ok" data-act="confirm" data-v="${c.id}">Confirmar recebimento</button>`:c.diff<0?`<span class="badge b-danger">Faltou ${brl(-c.diff)}</span>`:c.diff>0?`<span class="badge b-warn">Sobrou ${brl(c.diff)}</span>`:'<span class="badge b-ok">Bateu</span>'}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+}
+
+/* ---------- actions ---------- */
+const A = {
+  asVend(){ closeModal(); S.role='vend'; S.view = S.caixa?'pdv':'abrir'; render(); },
+  asGest(){ closeModal(); S.role='gest'; S.view='gest'; S.tab='resumo'; render(); },
+  logout(){ S.role=null; S.view='login'; closeModal(); render(); scrollTo(0,0); },
+  goPdv(){ S.role='vend'; S.view = S.caixa?'pdv':'abrir'; render(); scrollTo(0,0); },
+  tab(v){ S.tab=v; render(); scrollTo(0,0); },
+  cat(v){ S.cat=v; render(); },
+  add(v){ const p=prod(v); if((S.cart[v]||0)>=p.stock) return; S.cart[v]=(S.cart[v]||0)+1; render(); },
+  inc(v){ A.add(v); A.viewCart(); },
+  dec(v){ S.cart[v]=Math.max(0,(S.cart[v]||0)-1); if(!cartCount()){ closeModal(); render(); return; } render(); A.viewCart(); },
+  viewCart(){ const L = cartLines();
+    openModal(`<h3>Itens da venda</h3><p class="lead">${cartCount()} itens</p><div class="lines">${L.map(l=>`<div class="line"><div class="n">${esc(l.p.name)}<small class="num">${brl(l.p.price)} cada</small></div>
+      <div class="stp"><button data-act="dec" data-v="${l.p.id}" aria-label="Menos">−</button><span class="num">${l.q}</span><button data-act="inc" data-v="${l.p.id}" aria-label="Mais">+</button></div><b class="num" style="font-weight:500;min-width:72px;text-align:right">${brl(l.q*l.p.price)}</b></div>`).join('')}</div>
+      <div class="total"><span>Total</span><b class="num">${brl(cartTotal())}</b></div>
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px"><button class="btn" data-act="clear">Limpar</button><button class="btn pri big" data-act="charge">Cobrar</button></div>`); },
+  clear(){ S.cart={}; closeModal(); render(); },
+  charge(){ openModal(`<h3>Cobrar</h3><div class="total" style="border:0;padding:0;margin:6px 0 16px"><span class="muted">Total</span><b class="num">${brl(cartTotal())}</b></div>
+      <div class="pays"><button class="pay" data-act="payCash">${IC.cash}Dinheiro</button><button class="pay" data-act="payPix">${IC.pix}Pix</button><button class="pay" data-act="payCard">${IC.card}Cartão</button></div>`); },
+  payCash(){ S.pay={received:null}; cashModal(); },
+  recv(v){ S.pay.received = v==='exato' ? cartTotal() : parseInt(v); cashModal(); },
+  payPix(){ const t = cartTotal();
+    openModal(`<h3>Pix · ${brl(t)}</h3><p class="lead">Mostre a tela para a pessoa escanear</p><div class="qr">${qrSvg('cantina'+t+Date.now())}<span class="muted" style="font-size:13px">Recebedor: Igreja do Nazareno Vila Anchieta · Cantina</span></div>
+      <div class="info">⏳ Aguardando pagamento. A confirmação aparece sozinha, sem precisar olhar o celular da pessoa.</div>
+      <button class="btn ok big" style="margin-top:12px" data-act="finish" data-v="Pix">Simular Pix recebido (demo)</button>`); },
+  payCard(){ openModal(`<h3>Cartão · ${brl(cartTotal())}</h3><p class="lead">Passe o valor na maquininha da cantina</p>
+      <div class="info">Digite <b style="font-weight:500">${brl(cartTotal())}</b> na maquininha. Quando aprovar, confirme aqui.</div>
+      <button class="btn ok big" style="margin-top:12px" data-act="finish" data-v="Cartão">Pagamento aprovado</button>`); },
+  finish(v){ const t = cartTotal(), lines = cartLines().map(l=>({pid:l.p.id,q:l.q,price:l.p.price,cost:l.p.cost}));
+    lines.forEach(l=>prod(l.pid).stock-=l.q);
+    const sale = {id:uid++,date:new Date(),culto:S.caixa.culto,op:S.caixa.op,lines,total:t,method:v};
+    S.caixa.sales.push(sale); S.cart={}; closeModal(); render();
+    const low = lines.map(l=>prod(l.pid)).filter(p=>status(p));
+    toast(`✓ Venda de ${brl(t)} registrada (${v})${low.length?`<br><small>⚠ ${low.map(p=>esc(p.name)).join(', ')} acabando</small>`:''}`); },
+  fechar(){ const cx=S.caixa, by={Dinheiro:0,Pix:0,Cartão:0}; cx.sales.forEach(s=>by[s.method]+=s.total);
+    const expected = cx.troco+by.Dinheiro; S.pay={expected,by};
+    openModal(`<h3>Fechar caixa</h3><p class="lead">${esc(cx.culto)} · ${esc(cx.op)} · ${cx.sales.length} vendas</p>
+      <div class="sum num"><div><span>Pix</span><span>${brl(by.Pix)}</span></div><div><span>Cartão</span><span>${brl(by.Cartão)}</span></div><div><span>Dinheiro das vendas</span><span>${brl(by.Dinheiro)}</span></div><div><span>Troco inicial</span><span>${brl(cx.troco)}</span></div>
+      <div class="t"><span>Deve ter na gaveta</span><span>${brl(expected)}</span></div></div>
+      <form class="f" data-form="fechar"><label>Quanto dinheiro você contou? (R$)<input type="number" name="counted" step="0.01" min="0" required inputmode="decimal" value="${(expected/100).toFixed(2)}"></label>
+      <div id="diff"></div><label>Observação (opcional)<input type="text" name="note" placeholder="Ex.: dei um salgado de cortesia"></label>
+      <button class="btn pri big">Fechar e enviar para a tesouraria</button></form>`);
+    showDiff(expected); },
+  confirm(v){ const c = S.closings.find(x=>x.id==v); c.status='ok'; toast(`✓ Caixa de ${fd(c.date)} conferido. O valor entrou no caixa da igreja.`); render(); },
+  adjust(v){ const p = prod(v);
+    openModal(`<h3>${esc(p.name)}</h3><p class="lead">Estoque atual: ${p.stock} · mínimo ${p.min}</p><form class="f" data-form="adjust" data-v="${p.id}">
+      <div class="row2"><label>Preço de venda (R$)<input type="number" name="price" step="0.01" min="0" value="${(p.price/100).toFixed(2)}"></label><label>Estoque mínimo<input type="number" name="min" min="0" value="${p.min}"></label></div>
+      <label>Tirar do estoque (perda, vencido, cortesia)<input type="number" name="loss" min="0" max="${p.stock}" value="0"></label>
+      <label>Motivo<select name="reason"><option>Venceu</option><option>Estragou / caiu</option><option>Cortesia</option><option>Contagem corrigida</option></select></label>
+      <button class="btn pri big">Salvar</button></form>`); },
+  newProd(){ openModal(`<h3>Novo produto</h3><form class="f" data-form="newProd"><label>Nome<input type="text" name="name" required placeholder="Ex.: Empada"></label>
+      <label>Categoria<select name="cat">${Object.keys(CATS).map(c=>`<option>${c}</option>`).join('')}</select></label>
+      <div class="row2"><label>Custo (R$)<input type="number" name="cost" step="0.01" min="0" value="3.00"></label><label>Venda (R$)<input type="number" name="price" step="0.01" min="0" value="7.00"></label></div>
+      <div class="row2"><label>Estoque inicial<input type="number" name="stock" min="0" value="20"></label><label>Estoque mínimo<input type="number" name="min" min="0" value="8"></label></div>
+      <button class="btn pri big">Adicionar</button></form>`); },
+  newBuy(){ openModal(`<h3>Registrar compra</h3><p class="lead">Aumenta o estoque e registra a despesa com a nota.</p><form class="f" data-form="newBuy">
+      <label>Onde comprou<input type="text" name="who" required value="Atacadista"></label>
+      <div class="row2"><label>Produto<select name="pid">${S.products.map(p=>`<option value="${p.id}" ${p.id==='ref'?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label><label>Quantidade<input type="number" name="q" min="1" value="24"></label></div>
+      <label>Valor pago (R$)<input type="number" name="total" step="0.01" min="0" value="79.20"></label>
+      <label>Foto da nota<input type="file" name="rec" accept="image/*"></label>
+      <button class="btn pri big">Registrar compra</button></form>`); },
+  tour(){ openModal(`<h3>Como testar</h3><ol style="padding-left:20px;display:grid;gap:9px;font-size:14.5px;margin-top:10px">
+      <li>Toque em <b style="font-weight:500">Estou no caixa hoje</b> e abra o caixa.</li>
+      <li>Toque nos produtos para montar a venda e depois em <b style="font-weight:500">Cobrar</b>. Teste dinheiro (com troco), Pix e cartão.</li>
+      <li>Venda alguns <b style="font-weight:500">refrigerantes</b>: o estoque é baixo e o sistema avisa.</li>
+      <li>Toque em <b style="font-weight:500">Fechar caixa</b>, digite um valor contado diferente e veja a diferença.</li>
+      <li>Saia e entre como <b style="font-weight:500">Responsável / Tesouraria</b>: veja o resumo, o estoque e confirme o fechamento.</li></ol>
+      <button class="btn pri big" style="margin-top:14px" data-act="close">Começar</button>`); },
+  reset(){ seed(); closeModal(); render(); toast('Demonstração reiniciada'); },
+  close(){ closeModal(); },
+};
+function cashModal(){ const t = cartTotal(), r = S.pay.received, ch = r===null?null:r-t;
+  const opts = ['exato',...[1000,2000,5000,10000].filter(v=>v>t)].slice(0,4);
+  openModal(`<h3>Dinheiro · ${brl(t)}</h3><p class="lead">Quanto a pessoa entregou?</p>
+    <div class="quick">${opts.map(v=>`<button data-act="recv" data-v="${v}" class="num">${v==='exato'?'Exato':brl(v).replace(',00','')}</button>`).join('')}</div>
+    <form class="f" data-form="recv"><label>Outro valor (R$)<input type="number" name="v" step="0.01" min="0" inputmode="decimal" placeholder="Ex.: 30" value="${r!==null?(r/100).toFixed(2):''}"></label></form>
+    ${ch===null?'':ch<0?`<div class="change neg" style="margin-top:12px"><span>Falta</span><b class="num">${brl(-ch)}</b></div>`:`<div class="change" style="margin-top:12px"><span>Troco</span><b class="num">${brl(ch)}</b></div>`}
+    <button class="btn ok big" style="margin-top:4px" data-act="finish" data-v="Dinheiro" ${ch===null||ch<0?'disabled':''}>Confirmar venda</button>`); }
+function showDiff(expected){ const inp = document.querySelector('[name=counted]'), box = document.getElementById('diff'); if(!inp) return;
+  const d = Math.round(parseFloat(inp.value||0)*100) - expected;
+  box.innerHTML = d===0?'<div class="diff ok">✓ O dinheiro bateu com as vendas.</div>':d<0?`<div class="diff bad">Faltam <b class="num" style="font-weight:500">${brl(-d)}</b>. Fica registrado no fechamento.</div>`:`<div class="diff more">Sobram <b class="num" style="font-weight:500">${brl(d)}</b>. Fica registrado no fechamento.</div>`; }
+
+document.addEventListener('click', e => {
+  if(e.target.id==='ov') return closeModal();
+  const el = e.target.closest('[data-act]'); if(!el || el.disabled) return;
+  const f = A[el.dataset.act]; if(f){ e.preventDefault(); f(el.dataset.v, el); }
+});
+document.addEventListener('input', e => { if(e.target.name==='counted') showDiff(S.pay.expected); });
+document.addEventListener('submit', e => {
+  e.preventDefault(); const f = e.target, d = Object.fromEntries(new FormData(f)), cents = v => Math.round(parseFloat(v||0)*100);
+  if(f.dataset.form==='abrir'){ S.caixa = {op:d.op.trim()||'Voluntário', culto:d.culto, troco:cents(d.troco), sales:[], opened:new Date()}; S.view='pdv'; render(); toast(`Caixa aberto · ${esc(d.culto)}`); }
+  if(f.dataset.form==='recv'){ S.pay.received = cents(d.v); cashModal(); }
+  if(f.dataset.form==='fechar'){ const cx = S.caixa, by = S.pay.by, counted = cents(d.counted), diff = counted - S.pay.expected;
+    S.sales.push(...cx.sales);
+    S.closings.push({id:uid++,date:new Date(2026,8,28,21),culto:cx.culto,op:cx.op,troco:cx.troco,cash:by.Dinheiro,pix:by.Pix,card:by.Cartão,expected:S.pay.expected,counted,diff,status:'conferir',note:d.note||''});
+    S.caixa = null;
+    openModal(`<div class="done"><div class="ck">✓</div><h3 style="padding:0">Caixa fechado</h3><p class="lead">${cx.sales.length} vendas · ${brl(by.Dinheiro+by.Pix+by.Cartão)}${diff?` · diferença de ${brl(diff)}`:''}</p>
+      <div class="info" style="text-align:left">Entregue <b style="font-weight:500">${brl(counted)}</b> em dinheiro para a tesouraria. O fechamento já aparece para ela como "a conferir". Pix e cartão já estão na conta da igreja.</div>
+      <button class="btn pri big" style="margin-top:14px" data-act="asGest">Ver como Tesouraria</button></div>`);
+    S.role='vend'; S.view='abrir'; render(); }
+  if(f.dataset.form==='adjust'){ const p = prod(f.dataset.v), loss = Math.min(p.stock, parseInt(d.loss)||0);
+    p.price = cents(d.price); p.min = parseInt(d.min)||0; p.stock -= loss; closeModal(); render(); toast(loss?`${loss} un. retiradas (${esc(d.reason)})`:'Produto atualizado'); }
+  if(f.dataset.form==='newProd'){ S.products.push({id:'p'+(uid++),name:d.name.trim(),cat:d.cat,cost:cents(d.cost),price:cents(d.price),stock:parseInt(d.stock)||0,min:parseInt(d.min)||0,val:null}); closeModal(); render(); toast('Produto adicionado. Já aparece na tela de vendas.'); }
+  if(f.dataset.form==='newBuy'){ const p = prod(d.pid), q = parseInt(d.q)||0, has = f.querySelector('input[type=file]').files.length>0;
+    p.stock += q; S.purchases.push({id:uid++,date:TODAY,who:d.who,desc:p.name,total:cents(d.total),items:q+' un.',receipt:has});
+    closeModal(); render(); toast(`+${q} ${esc(p.name)} no estoque${has?'':' · falta anexar a nota'}`); }
+});
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+seed(); render();
+</script>
+</body>
+</html>
